@@ -1,6 +1,6 @@
 #  Gene Regulatory Network Analysis of Diabetes Dataset
 
-A bioinformatics project focused on reconstructing and analyzing a Gene Regulatory Network (GRN) using real gene expression data related to *diabetes mellitus*. This project is part of the Weblem-III internship task.
+A bioinformatics project focused on reconstructing and analyzing a Gene Regulatory Network (GRN) using real gene expression data related to *diabetes mellitus**.
 
 ---
 
