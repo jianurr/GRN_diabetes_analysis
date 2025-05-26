@@ -4,7 +4,7 @@ A bioinformatics project focused on reconstructing and analyzing a Gene Regulato
 
 ---
 
-##  Objectives
+##  Objectives:
 
 -  Download and preprocess gene expression data from NCBI-GEO
 -  Construct the Gene Regulatory Network using the ARACNE algorithm
