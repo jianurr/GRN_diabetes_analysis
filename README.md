@@ -1,4 +1,4 @@
-#  Gene Regulatory Network Analysis of Diabetes Dataset (Weblem-III)
+#  Gene Regulatory Network Analysis of Diabetes Dataset downloaded from GEO(Gene Expression Omnibus)
 
 A bioinformatics project focused on reconstructing and analyzing a Gene Regulatory Network (GRN) using real gene expression data related to *diabetes mellitus*. 
 
