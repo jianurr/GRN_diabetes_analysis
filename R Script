@@ -1,0 +1,64 @@
+# Install required packages (only run this once)
+install.packages("minet")
+install.packages("igraph")
+install.packages("poweRlaw")
+
+# Load libraries
+library(minet)
+library(igraph)
+library(poweRlaw)
+
+# Set working directory (change this to your data folder)
+setwd("your/path/to/data/")
+
+# Load gene expression data (genes in rows, samples in columns)
+data <- read.csv("GSE290271_Genes_fpkm.csv", row.names = 1)
+
+# Transpose data (samples in rows, genes in columns)
+data_t <- t(data)
+
+# Build mutual information matrix using Spearman correlation
+mim <- build.mim(data_t, estimator = "spearman")
+
+# Apply ARACNE algorithm to infer the network
+net <- aracne(mim)
+
+# Convert to edge list
+edges <- which(net != 0, arr.ind = TRUE)
+edge_list <- data.frame(
+  Source = rownames(net)[edges[, 1]],
+  Target = colnames(net)[edges[, 2]]
+)
+
+# Remove self loops
+edge_list <- edge_list[edge_list$Source != edge_list$Target, ]
+
+# Save edge list for Cytoscape
+write.csv(edge_list, "GRN_edges.csv", row.names = FALSE)
+
+# Create network graph
+g <- graph_from_data_frame(edge_list, directed = FALSE)
+
+# Show basic network info
+print(paste("Nodes:", vcount(g)))
+print(paste("Edges:", ecount(g)))
+
+# Degree Distribution
+deg <- degree(g)
+deg_table <- table(deg)
+
+# Plot degree distribution (log-log)
+plot(deg_table, log = "xy", main = "Degree Distribution (Log-Log)", xlab = "Degree", ylab = "Frequency")
+
+# Fit Power-Law
+pl <- displ$new(deg)
+est <- estimate_xmin(pl)
+pl$setXmin(est)
+alpha <- estimate_pars(pl)$pars
+
+# Print Power-Law result
+print(paste("Alpha:", alpha))
+print(paste("Xmin:", est$xmin))
+
+# Done
+print("GRN construction and analysis completed.")
